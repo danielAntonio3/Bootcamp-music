@@ -20,10 +20,30 @@ class Song {
       },
     });
   }
+
   async create(data) {
     return await prisma.song.create({
       data: {
         ...data,
+      },
+    });
+  }
+
+  async update(id, data) {
+    return await prisma.song.update({
+      where: {
+        id: Number.parseInt(id),
+      },
+      data: {
+        ...data,
+      },
+    });
+  }
+
+  async delete(id) {
+    return await prisma.song.delete({
+      where: {
+        id: Number.parseInt(id),
       },
     });
   }
