@@ -58,7 +58,7 @@ model Playlist {
   name   String
   songs  PlaylistWithSongs[]
   userId Int
-  User   User                @relation(fields: [userId], references: [id])
+  user   User                @relation(fields: [userId], references: [id])
 }
 
 model AlbumWithSongs {

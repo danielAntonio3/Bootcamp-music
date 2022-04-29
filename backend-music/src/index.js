@@ -1,5 +1,10 @@
 const express = require('express');
+const Albums = require('./routes/albums');
+const Authors = require('./routes/authors');
+const Libraries = require('./routes/libraries');
+const Playlists = require('./routes/playlists');
 const Songs = require('./routes/songs');
+const Users = require('./routes/users');
 
 const { PORT } = require('./config');
 
@@ -10,7 +15,12 @@ const app = express();
 app.use(express.json());
 
 // Incorporando rutas
+Albums(app);
+Authors(app);
+Libraries(app);
+Playlists(app);
 Songs(app);
+Users(app);
 
 // Ruta de prueba
 app.get('/', (req, res) => {

@@ -1,23 +1,23 @@
 const { Router } = require('express');
-const Song = require('./../services/songs');
+const User = require('./../services/users');
 
-function Songs(app) {
-  const SongServices = new Song();
+function Users(app) {
+  const ServicesUser = new User();
   const router = new Router();
 
-  app.use('/api/songs', router);
+  app.use('/api/users', router);
 
   // get all songs
   router.get('/', async (req, res) => {
     return res.status(200).json({
-      songs: await SongServices.getAll(),
+      songs: await ServicesUser.getAll(),
     });
   });
 
   // get id song
   router.get('/:id', async (req, res) => {
     return res.status(200).json({
-      song: await SongServices.getOne(req.params.id),
+      song: await ServicesUser.getOne(req.params.id),
     });
   });
 
@@ -25,23 +25,23 @@ function Songs(app) {
   router.post('/', async (req, res) => {
     // console.log(req.body);
     return res.status(200).json({
-      song: await SongServices.create(req.body),
+      song: await ServicesUser.create(req.body),
     });
   });
 
   // update a song
   router.put('/:id', async (req, res) => {
     return res.status(200).json({
-      song: await SongServices.update(req.params.id, req.body),
+      song: await ServicesUser.update(req.params.id, req.body),
     });
   });
 
   // delete a song
   router.delete('/:id', async (req, res) => {
     return res.status(200).json({
-      song: await SongServices.delete(req.params.id),
+      song: await ServicesUser.delete(req.params.id),
     });
   });
 }
 
-module.exports = Songs;
+module.exports = Users;
