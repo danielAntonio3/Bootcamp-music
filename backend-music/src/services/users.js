@@ -1,9 +1,10 @@
+// const connection = require('../helpers/connections')();
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 class User {
   async getAll() {
-    return await prisma.song.findMany({
+    return await prisma.user.findMany({
       include: {
         libraries: true,
         playlists: true,
@@ -11,10 +12,10 @@ class User {
     });
   }
 
-  async getOne(id) {
-    return await prisma.user.findUnique({
+  async getByEmail(email) {
+    return await prisma.user.findFirst({
       where: {
-        id: Number.parseInt(id),
+        email,
       },
       include: {
         libraries: true,

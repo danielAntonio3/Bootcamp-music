@@ -1,5 +1,6 @@
 const express = require('express');
 const Albums = require('./routes/albums');
+const Auth = require('./routes/auth');
 const Authors = require('./routes/authors');
 const Libraries = require('./routes/libraries');
 const Playlists = require('./routes/playlists');
@@ -15,6 +16,7 @@ const app = express();
 app.use(express.json());
 
 // Incorporando rutas
+Auth(app);
 Albums(app);
 Authors(app);
 Libraries(app);
