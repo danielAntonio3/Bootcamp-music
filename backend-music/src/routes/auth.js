@@ -9,7 +9,16 @@ function Auth(app) {
 
   // login of user
   router.post('/login', async (req, res) => {
-    // console.log(req.body);
+    const user = await authService.login(req.body);
+    res
+      .cookie('token', user.token, {
+        httpOnly: true,
+        //maxAge: 1000 * 60 * 60 * 24 * 7,
+        expires: new Date(new Date().setDate(new Date().getDate() + 7)),
+        secure: false,
+      })
+      .json(user);
+
     return res.status(200).json({
       users: await authService.login(req.body),
     });
@@ -17,7 +26,6 @@ function Auth(app) {
 
   // create a user
   router.post('/signup', async (req, res) => {
-    // console.log(req.body);
     return res.status(200).json({
       users: await authService.signUp(req.body),
     });
