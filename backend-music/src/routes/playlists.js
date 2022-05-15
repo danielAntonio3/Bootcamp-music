@@ -1,6 +1,7 @@
 const { Router } = require('express');
 
 const Playlist = require('./../services/playlists');
+const { authValidation } = require('./../middleware/auth');
 
 function Playlists(app) {
   const playlistServices = new Playlist();
@@ -20,9 +21,10 @@ function Playlists(app) {
     });
   });
 
-  router.post('/', async (req, res) => {
+  router.post('/', [authValidation], async (req, res) => {
+    const { id } = req.user;
     return res.status(200).json({
-      Album: await playlistServices.create(req.body),
+      Album: await playlistServices.create(req.body, id),
     });
   });
 

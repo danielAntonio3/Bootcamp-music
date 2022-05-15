@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const Song = require('./../services/songs');
+const { authValidation } = require('./../middleware/auth');
 
 function Songs(app) {
   const SongServices = new Song();
@@ -8,7 +9,7 @@ function Songs(app) {
   app.use('/api/songs', router);
 
   // get all songs
-  router.get('/', async (req, res) => {
+  router.get('/', [authValidation], async (req, res) => {
     return res.status(200).json({
       songs: await SongServices.getAll(),
     });

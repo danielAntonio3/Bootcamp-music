@@ -1,4 +1,6 @@
 const express = require('express');
+const cookie = require('cookie-parser');
+
 const Albums = require('./routes/albums');
 const Auth = require('./routes/auth');
 const Authors = require('./routes/authors');
@@ -11,6 +13,9 @@ const { PORT } = require('./config');
 
 // iniciar cliente
 const app = express();
+
+// middlewares:
+app.use(cookie());
 
 // Recibir tipo json
 app.use(express.json());

@@ -8,7 +8,7 @@ class Auth {
   async login(payload) {
     const { email, password } = payload;
     const user = await serviceUser.getByEmail(email);
-    console.log(user);
+    // console.log(user);
 
     if (user && this.compare(password, user.password)) {
       delete user.password;

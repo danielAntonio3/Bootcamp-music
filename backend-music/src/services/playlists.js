@@ -5,7 +5,7 @@ class Playlist {
   async getAll() {
     return await prisma.playlist.findMany({
       include: {
-        user: true,
+        owner: true,
       },
     });
   }
@@ -21,10 +21,15 @@ class Playlist {
     });
   }
 
-  async create(data) {
+  async create(data, ownerId) {
     return await prisma.playlist.create({
       data: {
-        ...data,
+        name: data.name,
+        owner: {
+          connect: {
+            id: Number.parseInt(ownerId),
+          },
+        },
       },
     });
   }
