@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: postgresMusicUser
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345root
+      POSTGRES_DB: testMusicUser
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    restart: always
+
+  app:
+    build: .
+    container_name: MusicAppUser
+    volumes:
+      - ./src:/app/src
+      - ./prisma:/app/prisma
+    command: npm run dev
+    ports:
+      - '4000:4000'
+      - '5555:5555'
+    depends_on:
+      - postgresMusicUser
+    restart: always
