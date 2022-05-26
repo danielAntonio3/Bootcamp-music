@@ -8,6 +8,12 @@ app.use(express.json());
 
 app.use('/api/users', router);
 
+app.get('/health', (req, res) => {
+  return res.json({
+    message: 'funciona',
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port http://localhost:${PORT}`);
 });
