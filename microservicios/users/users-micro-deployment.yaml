@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users
+  labels: #esto es para agregarlo en un grupo
+    micro: users
+spec:
+  selector:
+    matchLabels:
+      micro: users
+  replicas: 3
+  template: #Defección del pod
+    metadata:
+      name: users
+      labels: # debe tener el mismo nombre que labels de deployment
+        micro: users
+    spec:
+      containers:
+        - name: postgres-music-user
+          image: postgres
+          #Descargar la imagen si no esta en local
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: POSTGRES_USER
+              value: root
+            - name: POSTGRES_PASSWORD
+              value: "12345root"
+            - name: POSTGRES_DB
+              value: testMusicUser
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "1024Mi"
+          ports:
+            - containerPort: 5432
+              name: http
+              protocol: TCP
+        - name: users
+          image: users-micro
+          imagePullPolicy: Never
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "1024Mi"
+          ports:
+            - containerPort: 4000
+              name: http
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "4000"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 4000
+            initialDelaySeconds: 20
+            timeoutSeconds: 1 # no durar la prueba mas de un segundo
+            periodSeconds: 15 # El periodo de tiempo
+            failureThreshold: 3
