@@ -40,6 +40,21 @@ class Auth {
     }
   }
 
+  validate(token) {
+    try {
+      const data = jwt.verify(token, SECRET);
+      return {
+        success: true,
+        data,
+      };
+    } catch ({ message }) {
+      return {
+        success: false,
+        message,
+      };
+    }
+  }
+
   createToken(payload) {
     return jwt.sign(payload, SECRET, {
       expiresIn: '7d',

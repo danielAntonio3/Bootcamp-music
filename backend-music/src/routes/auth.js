@@ -30,6 +30,14 @@ function Auth(app) {
       users: await authService.signUp(req.body),
     });
   });
+
+  router.post('/validate', async (req, res) => {
+    const { token } = req.body;
+    const result = await authService.validate(token);
+    return res.status(result.success ? 200 : 400).json({
+      result,
+    });
+  });
 }
 
 module.exports = Auth;
