@@ -12,9 +12,9 @@ router.get('/', async (req, res) => {
 });
 
 // get id user
-router.get('/:id', async (req, res) => {
+router.get('/byEmail', async (req, res) => {
   return res.status(200).json({
-    user: await userServices.getOne(req.params.id),
+    user: await userServices.getOne(req.body.email),
   });
 });
 
