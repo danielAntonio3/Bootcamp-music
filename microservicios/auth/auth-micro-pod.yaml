@@ -4,25 +4,6 @@ metadata:
   name: auth
 spec:
   containers:
-    - name: postgres-music-auth
-      image: postgres
-      #Descargar la imagen si no esta en local
-      imagePullPolicy: IfNotPresent
-      env:
-        - name: POSTGRES_USER
-          value: root
-        - name: POSTGRES_PASSWORD
-          value: "12345root"
-        - name: POSTGRES_DB
-          value: testMusicAuth
-      resources:
-        limits:
-          cpu: "500m"
-          memory: "1024Mi"
-      ports:
-        - containerPort: 5432
-          name: http
-          protocol: TCP
     - name: auth
       image: auth-micro
       imagePullPolicy: Never

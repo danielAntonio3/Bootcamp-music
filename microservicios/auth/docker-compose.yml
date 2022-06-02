@@ -1,27 +1,10 @@
 version: '3.8'
 
 services:
-  postgres:
-    container_name: postgresMusicAuth
-    image: postgres
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: 12345root
-      POSTGRES_DB: testMusicAuth
-    volumes:
-      - ./data/postgres:/var/lib/postgresql/data
-    ports:
-      - '5432:5432'
-    restart: always
-
   app:
     build: .
     container_name: MusicAppAuth
     volumes:
       - ./src:/app/src
-      - ./prisma:/app/prisma
     ports:
       - '5000:5000'
-      - '5555:5555'
-    depends_on:
-      - postgresMusicAuth
