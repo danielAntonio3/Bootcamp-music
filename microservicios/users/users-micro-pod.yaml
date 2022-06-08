@@ -24,7 +24,7 @@ spec:
           name: http
           protocol: TCP
     - name: users
-      image: users-micro
+      image: users-micro/v1.0
       imagePullPolicy: Never
       resources:
         requests:
