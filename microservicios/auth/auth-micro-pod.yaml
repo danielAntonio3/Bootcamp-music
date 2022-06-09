@@ -20,7 +20,7 @@ spec:
           protocol: TCP
       env:
         - name: PORT
-          value: "4000"
+          value: "5000"
       livenessProbe:
         httpGet:
           path: /health

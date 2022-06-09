@@ -13,8 +13,9 @@ router.get('/', async (req, res) => {
 
 // get id user
 router.get('/byEmail', async (req, res) => {
+  const users = await userServices.getByEmail(req.body.email);
   return res.status(200).json({
-    user: await userServices.getOne(req.body.email),
+    users,
   });
 });
 

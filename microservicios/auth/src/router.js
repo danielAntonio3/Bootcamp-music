@@ -30,9 +30,10 @@ router.post('/signup', async (req, res) => {
 
 router.post('/validate', async (req, res) => {
   const { token } = req.body;
-  const result = await authService.validate(token);
-  return res.status(result.success ? 200 : 400).json({
-    result,
+  const { logged, data } = await authService.validate(token);
+  return res.status(logged ? 200 : 400).json({
+    logged,
+    data: data.users,
   });
 });
 

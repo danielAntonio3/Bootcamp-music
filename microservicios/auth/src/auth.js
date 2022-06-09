@@ -5,9 +5,10 @@ const { SECRET } = require('./config');
 // const User = require('./users');
 
 // const serviceUser = new User();
-const client = new axios.Axios({
+const client = axios.default.create({
   baseURL: 'http://localhost:4000/api/users',
 });
+
 class Auth {
   async login(payload) {
     const { email, password } = payload;
@@ -36,15 +37,22 @@ class Auth {
   async signUp(payload) {
     payload.password = await this.encrypt(payload.password);
     // const user = await serviceUser.create(payload);
-    const { data: user } = await client.post('/', payload);
-
-    if (user) {
-      delete user.password;
-      const token = this.createToken(user);
+    try {
+      const { data: user } = await client.post('/', payload);
+      if (user) {
+        delete user.password;
+        const token = this.createToken(user);
+        return {
+          logged: true,
+          user,
+          token,
+        };
+      }
+    } catch (error) {
+      console.log(error);
       return {
-        logged: true,
-        user,
-        token,
+        logged: false,
+        message: 'Ocurrió un error',
       };
     }
   }
@@ -53,12 +61,12 @@ class Auth {
     try {
       const data = jwt.verify(token, SECRET);
       return {
-        success: true,
+        logged: true,
         data,
       };
     } catch ({ message }) {
       return {
-        success: false,
+        logged: false,
         message,
       };
     }
