@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       micro: users
-  replicas: 3 # Numero de replicas
+  replicas: 2 # Numero de replicas
   # Investigar algunas otras propiedades
   #strategy:
   #rollingUpdate:
