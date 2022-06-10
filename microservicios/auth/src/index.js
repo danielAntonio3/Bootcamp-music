@@ -6,7 +6,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/api/auth', router);
+app.use(router);
 
 app.get('/health', (req, res) => {
   return res.json({

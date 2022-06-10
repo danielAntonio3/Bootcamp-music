@@ -15,7 +15,7 @@ spec:
           cpu: "500m"
           memory: "1024Mi"
       ports:
-        - containerPort: 4000
+        - containerPort: 5000
           name: http
           protocol: TCP
       env:
@@ -24,7 +24,7 @@ spec:
       livenessProbe:
         httpGet:
           path: /health
-          port: 4000
+          port: 5000
         initialDelaySeconds: 20
         timeoutSeconds: 1 # no durar la prueba mas de un segundo
         periodSeconds: 15 # El periodo de tiempo

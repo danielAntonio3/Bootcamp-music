@@ -6,7 +6,7 @@ const { SECRET } = require('./config');
 
 // const serviceUser = new User();
 const client = axios.default.create({
-  baseURL: 'http://localhost:4000/api/users',
+  baseURL: 'http://users:4000',
 });
 
 class Auth {

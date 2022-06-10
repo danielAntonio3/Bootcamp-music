@@ -1,30 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users
+  name: auth
   annotations:
     # Numero de revisiones
     deployment.kubernetes.io/revisions: "1"
   labels: # Esto es para agregarlo en un grupo
-    micro: users
+    micro: auth
 spec:
   selector:
     matchLabels:
-      micro: users
-  replicas: 3 # Numero de replicas
+      micro: auth
+  replicas: 2 # Numero de replicas
   # Investigar algunas otras propiedades
   #strategy:
   #rollingUpdate:
   # revisionHistoryLimit: 10
   template: # Defección del pod
     metadata:
-      name: users
+      name: auth
       labels: # Debe tener el mismo nombre que labels de deployment
-        micro: users
+        micro: auth
     spec:
       containers:
-        - name: users
-          image: users-micro
+        - name: auth
+          image: auth-micro/v1.0
           imagePullPolicy: Never
           resources:
             requests:
@@ -34,25 +34,25 @@ spec:
               cpu: "500m"
               memory: "1024Mi"
           ports:
-            - containerPort: 4000
+            - containerPort: 5000
               name: http
               protocol: TCP
           env:
             - name: PORT
-              value: "4000"
+              value: "5000"
           livenessProbe:
             httpGet:
               path: /health
-              port: 4000
-            initialDelaySeconds: 20
-            timeoutSeconds: 1 # No durar la prueba mas de un segundo
-            periodSeconds: 15 # El periodo de tiempo
+              port: 5000
+            initialDelaySeconds: 25
+            timeoutSeconds: 5 # No durar la prueba mas de un segundo
+            periodSeconds: 20 # El periodo de tiempo
             failureThreshold: 3
           readinessProbe:
             httpGet:
               path: /health
-              port: 4000
-            initialDelaySeconds: 5
-            timeoutSeconds: 1 # No durar la prueba mas de un segundo
-            periodSeconds: 2 # El periodo de tiempo
+              port: 5000
+            initialDelaySeconds: 25
+            timeoutSeconds: 5 # No durar la prueba mas de un segundo
+            periodSeconds: 20 # El periodo de tiempo
             failureThreshold: 3
