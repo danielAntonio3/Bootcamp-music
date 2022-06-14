@@ -1,14 +1,14 @@
-const { Router } = require('express');
-const auth = require('./auth');
+const { Router } = require("express");
+const auth = require("./auth");
 
 const router = new Router();
 const authService = new auth();
 
 // login of user
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
   const user = await authService.login(req.body);
   res
-    .cookie('token', user.token, {
+    .cookie("token", user.token, {
       httpOnly: true,
       //maxAge: 1000 * 60 * 60 * 24 * 7,
       expires: new Date(new Date().setDate(new Date().getDate() + 7)),
@@ -22,13 +22,13 @@ router.post('/login', async (req, res) => {
 });
 
 // create a user
-router.post('/signup', async (req, res) => {
+router.post("/signup", async (req, res) => {
   return res.status(200).json({
     users: await authService.signUp(req.body),
   });
 });
 
-router.post('/validate', async (req, res) => {
+router.post("/validate", async (req, res) => {
   const { token } = req.body;
   const { logged, data } = await authService.validate(token);
   return res.status(logged ? 200 : 400).json({
