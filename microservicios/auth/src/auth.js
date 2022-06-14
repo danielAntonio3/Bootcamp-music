@@ -1,19 +1,19 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const axios = require('axios');
-const { SECRET } = require('./config');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const axios = require("axios");
+const { SECRET } = require("./config");
 // const User = require('./users');
 
 // const serviceUser = new User();
 const client = axios.default.create({
-  baseURL: 'http://users:4000',
+  baseURL: "http://users:4000/api/users",
 });
 
 class Auth {
   async login(payload) {
     const { email, password } = payload;
     // const user = await serviceUser.getByEmail(email);
-    const { data: user } = await client.get('/byEmail', {
+    const { data: user } = await client.get("/byEmail", {
       params: { email },
     });
 
@@ -30,7 +30,7 @@ class Auth {
     }
     return {
       logged: false,
-      message: 'Credentials are not valid',
+      message: "Credentials are not valid",
     };
   }
 
@@ -38,7 +38,7 @@ class Auth {
     payload.password = await this.encrypt(payload.password);
     // const user = await serviceUser.create(payload);
     try {
-      const { data: user } = await client.post('/', payload);
+      const { data: user } = await client.post("/", payload);
       if (user) {
         delete user.password;
         const token = this.createToken(user);
@@ -52,7 +52,7 @@ class Auth {
       console.log(error);
       return {
         logged: false,
-        message: 'Ocurrió un error',
+        message: "Ocurrió un error",
       };
     }
   }
@@ -74,7 +74,7 @@ class Auth {
 
   createToken(payload) {
     return jwt.sign(payload, SECRET, {
-      expiresIn: '7d',
+      expiresIn: "7d",
     });
   }
 
