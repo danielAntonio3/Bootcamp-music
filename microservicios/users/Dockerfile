@@ -14,7 +14,7 @@ RUN npx prisma init
 
 COPY ./prisma ./prisma/
 
-# RUN npx prisma generate
+RUN npx prisma generate
 
 EXPOSE 4000
 
