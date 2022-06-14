@@ -12,7 +12,7 @@ app.use(
   })
 );
 
-app.use(router);
+app.use('/api/users',router);
 
 app.get('/health', (req, res) => {
   return res.json({
