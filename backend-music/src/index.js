@@ -1,20 +1,21 @@
-const express = require('express');
-const cookie = require('cookie-parser');
+const express = require("express");
+const cookie = require("cookie-parser");
 
-const Albums = require('./routes/albums');
-const Auth = require('./routes/auth');
-const Authors = require('./routes/authors');
-const Libraries = require('./routes/libraries');
-const Playlists = require('./routes/playlists');
-const Songs = require('./routes/songs');
-const Users = require('./routes/users');
+const Albums = require("./routes/albums");
+const Auth = require("./routes/auth");
+const Authors = require("./routes/authors");
+const Libraries = require("./routes/libraries");
+const Playlists = require("./routes/playlists");
+const Songs = require("./routes/songs");
+const Users = require("./routes/users");
+const Stream = require("./routes/stream");
 
-const { PORT } = require('./config');
+const { PORT } = require("./config");
 
 // iniciar cliente
 const app = express();
 
-// middlewares:
+// middleware:
 app.use(cookie());
 
 // Recibir tipo json
@@ -28,10 +29,11 @@ Libraries(app);
 Playlists(app);
 Songs(app);
 Users(app);
+Stream(app);
 
 // Ruta de prueba
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });
 
 app.listen(PORT, () => {
