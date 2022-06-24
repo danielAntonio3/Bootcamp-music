@@ -2,19 +2,18 @@ const { Router } = require("express");
 const { readFileStream } = require("../libs/files");
 const Streaming = require("../services/streaming");
 
-function Stream(app) {
+function stream(app) {
   const router = Router();
   const streaming = new Streaming();
-  app.use("/api/stream", router);
+  app.use("/stream", router);
+
+  router.get("/:fileName", (req, res) => {
+    streaming.downloadFile(req.params.fileName, res);
+  });
 
   router.post("/", (req, res) => {
-    const bb = readFileStream(req, streaming.uploadFile);
-
-    req.pipe(bb);
-    return res.json({
-      success: true,
-    });
+    readFileStream(req, res, streaming.uploadFile);
   });
 }
 
-module.exports = Stream;
+module.exports = stream;

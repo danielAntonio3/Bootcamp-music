@@ -2,19 +2,17 @@
 // 2. Investigar acerca de los stream
 // 3. Investigar acerca de raw-body
 
-const { uploadFile } = require("../libs/storage");
+const { uploadFile, downloadFile } = require("../libs/storage");
 
 class Streaming {
-  uploadFile(name, file, info) {
-    const { filename, encoding, mimeType } = info;
-    console.log(
-      `File [${name}]: filename: %j, encoding: %j, mimeType: %j`,
-      filename,
-      encoding,
-      mimeType
-    );
+  downloadFile(name, writableStream) {
+    downloadFile(name, writableStream);
+  }
 
-    uploadFile(filename, file);
+  async uploadFile(file, info) {
+    const { filename } = info;
+
+    return await uploadFile(filename, file);
   }
 }
 
